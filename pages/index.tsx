@@ -1,7 +1,18 @@
 import Head from 'next/head';
-import styles from '@/styles/Home.module.css';
+import { getAllPost } from '../lib/NotionAPI';
 
-export default function Home() {
+export const getStaticProps = async () => {
+  const allPosts = await getAllPost();
+
+  return {
+    props: {
+      allPosts,
+    },
+    revalidate: 60,
+  };
+};
+
+export default function Home({ allPosts }) {
   return (
     <>
       <Head>
