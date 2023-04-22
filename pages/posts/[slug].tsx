@@ -1,4 +1,26 @@
-const post = () => {
+import { getAllPost, getSinglePost } from '../../lib/NotionAPI';
+
+export const getStaticPaths = async () => {
+  const allPosts = await getAllPost();
+  const paths = allPosts.map(({ slug }) => ({ params: { slug } }));
+  return {
+    paths,
+    fallback: 'blocking',
+  };
+};
+
+export const getStaticProps = async ({ params }) => {
+  const post = await getSinglePost(params.slug);
+
+  return {
+    props: {
+      post,
+    },
+    revalidate: 60,
+  };
+};
+
+const Post = ({ post }) => {
   return (
     <section className='container lg:px-2 px-5 h-screen lg:w-2/5 mx-auto mt-20'>
       <h2 className='w-full text-2xl font-medium'>投稿</h2>
@@ -13,4 +35,4 @@ const post = () => {
   );
 };
 
-export default post;
+export default Post;
