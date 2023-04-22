@@ -1,4 +1,13 @@
-import { getSinglePost } from '../../lib/NotionAPI';
+import { getAllPost, getSinglePost } from '../../lib/NotionAPI';
+
+export const getStaticPaths = async () => {
+  const allPosts = await getAllPost();
+  const paths = allPosts.map(({ slug }) => ({ params: { slug } }));
+  return {
+    paths,
+    fallback: 'blocking',
+  };
+};
 
 export const getStaticProps = async ({ params }) => {
   const post = await getSinglePost(params.slug);
