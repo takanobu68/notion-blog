@@ -8,6 +8,7 @@ import {
 } from '../../../lib/notionAPI';
 import SinglePost from '../../../components/Post/SinglePost';
 import { GetStaticPaths, GetStaticProps } from 'next';
+import Pagination from '../../../components/Pagination/Pagination';
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const numberOfPage = await getNumberOfPages();
@@ -59,6 +60,7 @@ const BlogPageList = ({ postByPage }) => {
             </div>
           ))}
         </section>
+        <Pagination />
       </main>
     </div>
   );
