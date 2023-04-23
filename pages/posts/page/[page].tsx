@@ -1,8 +1,14 @@
 import Head from 'next/head';
-import { getAllPost, getPostsFourTopPage } from '../lib/notionAPI';
-import SinglePost from '../components/Post/SinglePost';
-import { GetStaticProps } from 'next';
-import Link from 'next/link';
+import { getAllPost, getPostsFourTopPage } from '../../../lib/notionAPI';
+import SinglePost from '../../../components/Post/SinglePost';
+import { GetStaticPaths, GetStaticProps } from 'next';
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  return {
+    paths: [{ params: { page: '1' } }, { params: { page: '2' } }],
+    fallback: 'blocking',
+  };
+};
 
 export const getStaticProps: GetStaticProps = async () => {
   const fourPosts = await getPostsFourTopPage();
@@ -15,7 +21,7 @@ export const getStaticProps: GetStaticProps = async () => {
   };
 };
 
-export default function Home({ fourPosts }) {
+const BlogPageList = ({ fourPosts }) => {
   return (
     <div className='container h-full w-full mx-auto'>
       <Head>
@@ -39,14 +45,9 @@ export default function Home({ fourPosts }) {
             />
           </div>
         ))}
-        <Link
-          href='./posts/page/1'
-          className='mb-6 lg:w-1/2 mx-auto px-5 block text-center'
-        >
-          {' '}
-          ...もっと見る
-        </Link>
       </main>
     </div>
   );
-}
+};
+
+export default BlogPageList;

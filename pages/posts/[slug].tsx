@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { getAllPost, getSinglePost } from '../../lib/NotionAPI';
+import { getAllPost, getSinglePost } from '../../lib/notionAPI';
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/cjs/styles/prism';
