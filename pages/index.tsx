@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import { getAllPost, getPostsFourTopPage } from '../lib/notionAPI';
+import { getAllPost, getPostsFourTopPage } from '../lib/NotionAPI';
 import SinglePost from '../components/Post/SinglePost';
 import { GetStaticProps } from 'next';
 
