@@ -56,9 +56,7 @@ const Post = ({ post }) => {
                   PreTag='div'
                 />
               ) : (
-                <code {...props} className={className}>
-                  {children}
-                </code>
+                <code>{children}</code>
               );
             },
           }}
