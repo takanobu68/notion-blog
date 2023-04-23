@@ -1,12 +1,30 @@
 import Head from 'next/head';
-import { getPostsByTagAndPage } from '../../../../../lib/notionAPI';
+import {
+  getAllPagesNumber,
+  getAllTags,
+  getNumberOfPagesByTag,
+  getPostsByTagAndPage,
+} from '../../../../../lib/notionAPI';
 import SinglePost from '../../../../../components/Post/SinglePost';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import Pagination from '../../../../../components/Pagination/Pagination';
 
 export const getStaticPaths: GetStaticPaths = async () => {
+  const allTags = await getAllTags();
+  const params = [];
+
+  await Promise.all(
+    allTags.map((tag) => {
+      return getNumberOfPagesByTag(tag).then((numberOfPagesByTags: number) => {
+        for (let i = 1; i <= numberOfPagesByTags; ++i) {
+          params.push({ params: { tag, page: i.toString() } });
+        }
+      });
+    })
+  );
+
   return {
-    paths: [{ params: { tag: 'blog', page: '1' } }],
+    paths: params,
     fallback: 'blocking',
   };
 };
