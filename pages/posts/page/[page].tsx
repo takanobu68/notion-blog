@@ -25,15 +25,18 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const currentPage = context.params?.page;
   const postByPage = await getPostsByPage(parseInt(currentPage.toString(), 10));
 
+  const numberOfPage = await getNumberOfPages();
+
   return {
     props: {
       postByPage,
+      numberOfPage,
     },
     revalidate: 60,
   };
 };
 
-const BlogPageList = ({ postByPage }) => {
+const BlogPageList = ({ postByPage, numberOfPage }) => {
   return (
     <div className='container h-full w-full mx-auto'>
       <Head>
@@ -60,7 +63,7 @@ const BlogPageList = ({ postByPage }) => {
             </div>
           ))}
         </section>
-        <Pagination />
+        <Pagination numberOfPage={numberOfPage} />
       </main>
     </div>
   );
