@@ -36,6 +36,7 @@ export default function Home({ fourPosts }) {
               date={post.date}
               tags={post.tags}
               slug={post.slug}
+              isPaginationPage={false}
             />
           </div>
         ))}
