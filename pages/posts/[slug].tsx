@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { getAllPost, getSinglePost } from '../../lib/NotionAPI';
+import { getAllPost, getSinglePost } from '../../lib/notionAPI';
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/cjs/styles/prism';
@@ -33,9 +33,12 @@ const Post = ({ post }) => {
         Posted date at {post.metaData.date}
       </span>
       <br />
-      {post.metaData.tags.map((tag) => (
-        <p className='text-white bg-sky-900 rounded-xl font-medium mt-2 px-2 inline-block mr-2'>
-          {tag}
+      {post.metaData.tags.map((tag, index) => (
+        <p
+          className='text-white bg-sky-900 rounded-xl font-medium mt-2 px-2 inline-block mr-2'
+          key={index}
+        >
+          <Link href={`/posts/tag/${tag}/page/1`}>{tag}</Link>
         </p>
       ))}
       <div className='mt-10 font-medium'>
