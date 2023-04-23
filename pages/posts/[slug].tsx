@@ -43,23 +43,25 @@ const Post = ({ post }) => {
       ))}
       <div className='mt-10 font-medium'>
         <ReactMarkdown
-          children={post.markdown}
           components={{
             code({ node, inline, className, children }) {
               const match = /language-(\w+)/.exec(className || '');
               return !inline && match ? (
                 <SyntaxHighlighter
-                  children={String(children).replace(/\n$/, '')}
                   style={vscDarkPlus}
                   language={match[1]}
                   PreTag='div'
-                />
+                >
+                  {String(children).replace(/\n$/, '')}
+                </SyntaxHighlighter>
               ) : (
                 <code>{children}</code>
               );
             },
           }}
-        ></ReactMarkdown>
+        >
+          {post.markdown}
+        </ReactMarkdown>
         <Link href={'/'}>
           <span className='pb-20 block mt-3'>←ホームに戻る</span>
         </Link>
