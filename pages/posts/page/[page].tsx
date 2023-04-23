@@ -1,5 +1,9 @@
 import Head from 'next/head';
-import { getAllPost, getPostsFourTopPage } from '../../../lib/notionAPI';
+import {
+  getAllPost,
+  getPostsByPage,
+  getPostsFourTopPage,
+} from '../../../lib/notionAPI';
 import SinglePost from '../../../components/Post/SinglePost';
 import { GetStaticPaths, GetStaticProps } from 'next';
 
@@ -10,18 +14,19 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-export const getStaticProps: GetStaticProps = async () => {
-  const fourPosts = await getPostsFourTopPage();
+export const getStaticProps: GetStaticProps = async (context) => {
+  const currentPage = context.params?.page;
+  const postByPage = await getPostsByPage(parseInt(currentPage.toString(), 10));
 
   return {
     props: {
-      fourPosts,
+      postByPage,
     },
     revalidate: 60,
   };
 };
 
-const BlogPageList = ({ fourPosts }) => {
+const BlogPageList = ({ postByPage }) => {
   return (
     <div className='container h-full w-full mx-auto'>
       <Head>
@@ -35,7 +40,7 @@ const BlogPageList = ({ fourPosts }) => {
           Notion Blog🚀
         </h1>
         <section className='sm:grid grid-cols-2 w-5/6 gap-3 mx-auto'>
-          {fourPosts.map((post) => (
+          {postByPage.map((post) => (
             <div className='mx-4' key={post.id}>
               <SinglePost
                 title={post.title}
