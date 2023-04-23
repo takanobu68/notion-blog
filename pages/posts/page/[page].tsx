@@ -2,6 +2,7 @@ import Head from 'next/head';
 import {
   getAllPagesNumber,
   getAllPost,
+  getAllTags,
   getNumberOfPages,
   getPostsByPage,
   getPostsFourTopPage,
@@ -9,6 +10,7 @@ import {
 import SinglePost from '../../../components/Post/SinglePost';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import Pagination from '../../../components/Pagination/Pagination';
+import Tag from '../../../components/Tag/Tag';
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const numberOfPage = await getNumberOfPages();
@@ -25,18 +27,20 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const currentPage = context.params?.page;
   const postByPage = await getPostsByPage(parseInt(currentPage.toString(), 10));
 
+  const allTags = await getAllTags();
   const numberOfPage = await getNumberOfPages();
 
   return {
     props: {
       postByPage,
       numberOfPage,
+      allTags,
     },
     revalidate: 60,
   };
 };
 
-const BlogPageList = ({ postByPage, numberOfPage }) => {
+const BlogPageList = ({ postByPage, numberOfPage, allTags }) => {
   return (
     <div className='container h-full w-full mx-auto'>
       <Head>
@@ -64,6 +68,7 @@ const BlogPageList = ({ postByPage, numberOfPage }) => {
           ))}
         </section>
         <Pagination numberOfPage={numberOfPage} />
+        <Tag allTags={allTags} />
       </main>
     </div>
   );
