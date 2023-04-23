@@ -22,8 +22,11 @@ const SinglePost = (props: Props) => {
               </h2>
             </Link>
             <div className='text-gray-400 mr-2'>{date}</div>
-            {tags.map((tag) => (
-              <span className='text-white bg-gray-500 rounded-xl px-2 font-medium mr-2'>
+            {tags.map((tag, index) => (
+              <span
+                key={index}
+                className='text-white bg-gray-500 rounded-xl px-2 font-medium mr-2'
+              >
                 {tag}
               </span>
             ))}
