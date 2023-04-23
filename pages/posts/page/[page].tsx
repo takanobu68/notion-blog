@@ -1,6 +1,8 @@
 import Head from 'next/head';
 import {
+  getAllPagesNumber,
   getAllPost,
+  getNumberOfPages,
   getPostsByPage,
   getPostsFourTopPage,
 } from '../../../lib/notionAPI';
@@ -8,8 +10,12 @@ import SinglePost from '../../../components/Post/SinglePost';
 import { GetStaticPaths, GetStaticProps } from 'next';
 
 export const getStaticPaths: GetStaticPaths = async () => {
+  const numberOfPage = await getNumberOfPages();
+
+  const paths = getAllPagesNumber(numberOfPage);
+
   return {
-    paths: [{ params: { page: '1' } }, { params: { page: '2' } }],
+    paths,
     fallback: 'blocking',
   };
 };

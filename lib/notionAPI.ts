@@ -89,3 +89,11 @@ export const getNumberOfPages = async () => {
     ? 1
     : 0;
 };
+
+export const getAllPagesNumber = (numberOfPage: number) => {
+  const pageObj = [];
+  for (let i = 0; i < numberOfPage; ++i) {
+    pageObj.push({ params: { page: i.toString() } });
+  }
+  return pageObj;
+};
